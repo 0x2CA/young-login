@@ -1,0 +1,19 @@
+if [ -f ~/.young.conf ];then
+source ~/.young.conf
+curl "http://$server/quickauth.do?wlanacname=gztzy&wlanuserip=$ip&userid=$user&passwd=$passwd"
+echo ""
+while (true)
+do
+sleep 15s
+curl -s "http://$server/quickauth.do?wlanacname=gztzy&wlanuserip=$ip&userid=$user&passwd=$passwd" > /dev/null
+echo keeplive
+done
+else
+touch ~/.young.conf
+echo server= > ~/.young.conf
+echo ip= >> ~/.young.conf
+echo user= >> ~/.young.conf
+echo passwd= >> ~/.young.conf
+echo Please edit the file: ~/.young.conf
+fi
+
