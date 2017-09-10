@@ -1,7 +1,14 @@
 if [ -f ~/.young.conf ];then
 source ~/.young.conf
-curl "http://$server/quickauth.do?wlanacname=gztzy&wlanuserip=$ip&userid=$user&passwd=$passwd"
-echo ""
+curl -s "http://$server/quickauth.do?wlanacname=gztzy&wlanuserip=$ip&userid=$user&passwd=$passwd" > /tmp/young.tmp
+result="$(cut -d '"' -f 8 /tmp/young.tmp 2>&1)"
+echo $result
+while([ "认证成功" != "$result" ])
+do
+curl -s "http://$server/quickauth.do?wlanacname=gztzy&wlanuserip=$ip&userid=$user&passwd=$passwd" > /tmp/young.tmp
+result="$(cut -d '"' -f 8 /tmp/young.tmp 2>&1)"
+echo $result
+done
 if [ "$1" == "keeplive" ];then
 while (true)
 do
