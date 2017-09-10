@@ -2,12 +2,14 @@ if [ -f ~/.young.conf ];then
 source ~/.young.conf
 curl "http://$server/quickauth.do?wlanacname=gztzy&wlanuserip=$ip&userid=$user&passwd=$passwd"
 echo ""
+if [ "$1" == "keeplive" ];then
 while (true)
 do
 sleep 15s
 curl -s "http://$server/quickauth.do?wlanacname=gztzy&wlanuserip=$ip&userid=$user&passwd=$passwd" > /dev/null
 echo keeplive
 done
+fi
 else
 touch ~/.young.conf
 echo server= > ~/.young.conf
