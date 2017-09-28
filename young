@@ -1,28 +1,67 @@
 if [ -f ~/.young.conf ];then
-source ~/.young.conf
-curl -s "http://$server/quickauth.do?wlanacname=gztzy&wlanuserip=$ip&userid=$user&passwd=$passwd" > /tmp/young.tmp
-result="$(cut -d '"' -f 8 /tmp/young.tmp 2>&1)"
-echo $result
-while([ "认证成功" != "$result" ])
-do
-curl -s "http://$server/quickauth.do?wlanacname=gztzy&wlanuserip=$ip&userid=$user&passwd=$passwd" > /tmp/young.tmp
-result="$(cut -d '"' -f 8 /tmp/young.tmp 2>&1)"
-echo $result
-done
-if [ "$1" == "keeplive" ];then
-while (true)
-do
-sleep 15s
-curl -s "http://$server/quickauth.do?wlanacname=gztzy&wlanuserip=$ip&userid=$user&passwd=$passwd" > /dev/null
-echo keeplive
-done
-fi
-else
-touch ~/.young.conf
-echo server= > ~/.young.conf
-echo ip= >> ~/.young.conf
-echo user= >> ~/.young.conf
-echo passwd= >> ~/.young.conf
-echo Please edit the file: ~/.young.conf
-fi
+  source ~/.young.conf
 
+  curl -s  baidu.com -i>/tmp/young.tmp
+  grep -s  "Location: " /tmp/young.tmp >/tmp/young.conf
+
+  server_tmp="$(cut -d "/" -f 3 /tmp/young.conf 2>&1)"
+  if [ "$server_tmp" != ""  ];then
+    server=$server_tmp
+  fi
+
+  cut -d "?" -f 2 /tmp/young.conf > /tmp/young.tmp.conf
+  mv /tmp/young.tmp.conf /tmp/young.conf
+
+
+  ip_tmp="$(cut -d "=" -f 3 /tmp/young.conf 2>&1)"
+  if [ "$ip_tmp" != ""  ];then
+    echo $ip_tmp>/tmp/young.tmp.conf
+    ip_tmp="$(sed 's/\r//g' /tmp/young.tmp.conf)"
+    rm /tmp/young.tmp.conf
+    ip=$ip_tmp
+  fi
+
+  cut -d "&" -f 1 /tmp/young.conf > /tmp/young.tmp.conf
+  mv /tmp/young.tmp.conf /tmp/young.conf
+
+  name_tmp="$(cut -d "=" -f 2 /tmp/young.conf 2>&1)"
+  if [ "$name_tmp" != ""  ];then
+    name=$name_tmp
+  fi
+
+  rm /tmp/young.conf
+
+  echo server=$server > ~/.young.conf
+  echo ip=$ip>> ~/.young.conf
+  echo name=$name>> ~/.young.conf
+  echo user=$user>> ~/.young.conf
+  echo passwd=$passwd>> ~/.young.conf
+
+  curl -s "http://$server/quickauth.do?wlanacname=$name&wlanuserip=$ip&userid=$user&passwd=$passwd" > /tmp/young.tmp
+  result="$(cut -d '"' -f 8 /tmp/young.tmp 2>&1)"
+  echo $result
+  while([ "认证成功" != "$result" ])
+  do
+    curl -s "http://$server/quickauth.do?wlanacname=$name&wlanuserip=$ip&userid=$user&passwd=$passwd" > /tmp/young.tmp
+    result="$(cut -d '"' -f 8 /tmp/young.tmp 2>&1)"
+    echo $result
+  done
+  if [ "$1" == "keeplive" ];then
+
+    touch ~/.young.conf
+    echo server=$server > ~/.young.conf
+    echo ip=$ip>> ~/.young.conf
+    echo name=$name>> ~/.young.conf
+    echo user=$user>> ~/.young.conf
+    echo passwd=$passwd>> ~/.young.conf
+
+    while (true)
+    do
+      sleep 15s
+      curl -s "http://$server/quickauth.do?wlanacname=$name&wlanuserip=$ip&userid=$user&passwd=$passwd" > /dev/null
+      echo keeplive
+    done
+  fi
+else
+  echo Please edit the file: ~/.young.conf
+fi
