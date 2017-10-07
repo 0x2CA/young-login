@@ -63,5 +63,41 @@ if [ -f ~/.young.conf ];then
     done
   fi
 else
-  echo Please edit the file: ~/.young.conf
+
+  curl -s  baidu.com -i>/tmp/young.tmp
+  grep -s  "Location: " /tmp/young.tmp >/tmp/young.conf
+
+  server_tmp="$(cut -d "/" -f 3 /tmp/young.conf 2>&1)"
+  if [ "$server_tmp" != ""  ];then
+    server=$server_tmp
+    fi
+
+    cut -d "?" -f 2 /tmp/young.conf > /tmp/young.tmp.conf
+    mv /tmp/young.tmp.conf /tmp/young.conf
+
+
+    ip_tmp="$(cut -d "=" -f 3 /tmp/young.conf 2>&1)"
+    if [ "$ip_tmp" != ""  ];then
+    echo $ip_tmp>/tmp/young.tmp.conf
+    ip_tmp="$(sed 's/\r//g' /tmp/young.tmp.conf)"
+    rm /tmp/young.tmp.conf
+    ip=$ip_tmp
+    fi
+
+    cut -d "&" -f 1 /tmp/young.conf > /tmp/young.tmp.conf
+    mv /tmp/young.tmp.conf /tmp/young.conf
+
+    name_tmp="$(cut -d "=" -f 2 /tmp/young.conf 2>&1)"
+    if [ "$name_tmp" != ""  ];then
+    name=$name_tmp
+    fi
+
+    rm /tmp/young.conf
+
+    echo server=$server > ~/.young.conf
+    echo ip=$ip>> ~/.young.conf
+    echo name=$name>> ~/.young.conf
+    echo user=$user>> ~/.young.conf
+    echo passwd=$passwd>> ~/.young.conf
+    echo Please edit the file: ~/.young.conf
 fi
