@@ -1,6 +1,8 @@
 if [ -f ~/.young.conf ];then
+  echo 正在加载配置文件...
   source ~/.young.conf
 
+  echo 正在获取最新的配置信息...
   curl -s  baidu.com -i>/tmp/young.tmp
   grep -s  "Location: " /tmp/young.tmp >/tmp/young.conf
 
@@ -31,30 +33,37 @@ if [ -f ~/.young.conf ];then
 
   rm /tmp/young.conf
 
+  echo 正在使用的信息如下：
+  echo 服务器：$server
+  echo 本地主机：$ip
+  echo 学校名字：$name
+  echo 用户名：$user
+  echo 密码：$passwd
+
   echo server=$server > ~/.young.conf
   echo ip=$ip>> ~/.young.conf
   echo name=$name>> ~/.young.conf
   echo user=$user>> ~/.young.conf
   echo passwd=$passwd>> ~/.young.conf
 
+  echo 正在登陆...
   curl -s "http://$server/quickauth.do?wlanacname=$name&wlanuserip=$ip&userid=$user&passwd=$passwd" > /tmp/young.tmp
   result="$(cut -d '"' -f 8 /tmp/young.tmp 2>&1)"
-  echo $result
+  if [ "$result" != "" ];then
+    echo $result
+  fi
   while([ "认证成功" != "$result" ])
   do
+    echo 登陆失败...
+    sleep 2s
+    echo 正在重试...
     curl -s "http://$server/quickauth.do?wlanacname=$name&wlanuserip=$ip&userid=$user&passwd=$passwd" > /tmp/young.tmp
     result="$(cut -d '"' -f 8 /tmp/young.tmp 2>&1)"
-    echo $result
+    if [ "$result" != "" ];then
+      echo $result
+    fi
   done
   if [ "$1" == "keeplive" ];then
-
-    touch ~/.young.conf
-    echo server=$server > ~/.young.conf
-    echo ip=$ip>> ~/.young.conf
-    echo name=$name>> ~/.young.conf
-    echo user=$user>> ~/.young.conf
-    echo passwd=$passwd>> ~/.young.conf
-
     while (true)
     do
       sleep 15s
@@ -63,7 +72,7 @@ if [ -f ~/.young.conf ];then
     done
   fi
 else
-
+  echo 正在获取最新的配置信息...
   curl -s  baidu.com -i>/tmp/young.tmp
   grep -s  "Location: " /tmp/young.tmp >/tmp/young.conf
 
@@ -99,5 +108,12 @@ else
     echo name=$name>> ~/.young.conf
     echo user=$user>> ~/.young.conf
     echo passwd=$passwd>> ~/.young.conf
+
+    echo 正在使用的信息如下：
+    echo 服务器：$server
+    echo 本地主机：$ip
+    echo 学校名字：$name
+    echo 用户名：$user
+    echo 密码：$passwd
     echo Please edit the file: ~/.young.conf
 fi
