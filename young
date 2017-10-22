@@ -86,18 +86,18 @@ getconf(){
 		name=$tmp_n
 		user=$tmp_u
 		passwd=$tmp_p
-		echo -e "\033[1;32m[IFO]\033[0m \033[1;36m正在使用的信息如下\033[0m："
-		echo -e "\033[1;32m[IFO]\033[0m \033[1;36m服务器\033[0m：\033[1;31m$server\033[0m"
-		echo -e "\033[1;32m[IFO]\033[0m \033[1;36m本地主机\033[0m：\033[1;31m$ip\033[0m"
-		echo -e "\033[1;32m[IFO]\033[0m \033[1;36m学校名字\033[0m：\033[1;31m$name\033[0m"
-		echo -e "\033[1;32m[IFO]\033[0m \033[1;36m用户名\033[0m：\033[1;31m$user\033[0m"
-		echo -e "\033[1;32m[IFO]\033[0m \033[1;36m密码\033[0m：\033[1;31m$passwd\033[0m"
+		echo -e "\033[1;32m[INFO]\033[0m \033[1;36m正在使用的信息如下\033[0m："
+		echo -e "\033[1;32m[INFO]\033[0m \033[1;36m服务器\033[0m：\033[1;31m$server\033[0m"
+		echo -e "\033[1;32m[INFO]\033[0m \033[1;36m本地主机\033[0m：\033[1;31m$ip\033[0m"
+		echo -e "\033[1;32m[INFO]\033[0m \033[1;36m学校名字\033[0m：\033[1;31m$name\033[0m"
+		echo -e "\033[1;32m[INFO]\033[0m \033[1;36m用户名\033[0m：\033[1;31m$user\033[0m"
+		echo -e "\033[1;32m[INFO]\033[0m \033[1;36m密码\033[0m：\033[1;31m$passwd\033[0m"
 	else
 		if [ -f "$File" ];then
-			echo -e "\033[1;32m[IFO]\033[0m \033[1;36m正在加载配置文件...\033[0m"
+			echo -e "\033[1;32m[INFO]\033[0m \033[1;36m正在加载配置文件...\033[0m"
 			source $File
 
-			echo -e "\033[1;32m[IFO]\033[0m \033[1;36m正在获取最新的配置信息...\033[0m"
+			echo -e "\033[1;32m[INFO]\033[0m \033[1;36m正在获取最新的配置信息...\033[0m"
 			curl -s  baidu.com -i>/tmp/young.tmp
 			grep -s  "Location: " /tmp/young.tmp >/tmp/young.conf
 
@@ -150,15 +150,15 @@ getconf(){
 				passwd="未知"
 			fi
 
-			echo -e "\033[1;32m[IFO]\033[0m \033[1;36m正在使用的信息如下\033[0m："
-			echo -e "\033[1;32m[IFO]\033[0m \033[1;36m服务器\033[0m：\033[1;31m$server\033[0m"
-			echo -e "\033[1;32m[IFO]\033[0m \033[1;36m本地主机\033[0m：\033[1;31m$ip\033[0m"
-			echo -e "\033[1;32m[IFO]\033[0m \033[1;36m学校名字\033[0m：\033[1;31m$name\033[0m"
-			echo -e "\033[1;32m[IFO]\033[0m \033[1;36m用户名\033[0m：\033[1;31m$user\033[0m"
-			echo -e "\033[1;32m[IFO]\033[0m \033[1;36m密码\033[0m：\033[1;31m$passwd\033[0m"
+			echo -e "\033[1;32m[INFO]\033[0m \033[1;36m正在使用的信息如下\033[0m："
+			echo -e "\033[1;32m[INFO]\033[0m \033[1;36m服务器\033[0m：\033[1;31m$server\033[0m"
+			echo -e "\033[1;32m[INFO]\033[0m \033[1;36m本地主机\033[0m：\033[1;31m$ip\033[0m"
+			echo -e "\033[1;32m[INFO]\033[0m \033[1;36m学校名字\033[0m：\033[1;31m$name\033[0m"
+			echo -e "\033[1;32m[INFO]\033[0m \033[1;36m用户名\033[0m：\033[1;31m$user\033[0m"
+			echo -e "\033[1;32m[INFO]\033[0m \033[1;36m密码\033[0m：\033[1;31m$passwd\033[0m"
 
 		else
-			echo -e "\033[1;32m[IFO]\033[0m \033[1;36m正在获取最新的配置信息...\033[0m"
+			echo -e "\033[1;32m[INFO]\033[0m \033[1;36m正在获取最新的配置信息...\033[0m"
 		  curl -s  baidu.com -i>/tmp/young.tmp
 		  grep -s  "Location: " /tmp/young.tmp >/tmp/young.conf
 
@@ -210,13 +210,13 @@ getconf(){
 				if [[ $passwd == "" ]]; then
 					passwd="未知"
 				fi
-				echo -e "\033[1;32m[IFO]\033[0m \033[1;36m正在使用的信息如下\033[0m："
-				echo -e "\033[1;32m[IFO]\033[0m \033[1;36m服务器\033[0m：\033[1;31m$server\033[0m"
-				echo -e "\033[1;32m[IFO]\033[0m \033[1;36m本地主机\033[0m：\033[1;31m$ip\033[0m"
-				echo -e "\033[1;32m[IFO]\033[0m \033[1;36m学校名字\033[0m：\033[1;31m$name\033[0m"
-				echo -e "\033[1;32m[IFO]\033[0m \033[1;36m用户名\033[0m：\033[1;31m$user\033[0m"
-				echo -e "\033[1;32m[IFO]\033[0m \033[1;36m密码\033[0m：\033[1;31m$passwd\033[0m"
-				echo -e "\033[1;32m[IFO]\033[0m \033[1;36mPlease edit the file\033[0m: \033[1;31m$File\033[0m"
+				echo -e "\033[1;32m[INFO]\033[0m \033[1;36m正在使用的信息如下\033[0m："
+				echo -e "\033[1;32m[INFO]\033[0m \033[1;36m服务器\033[0m：\033[1;31m$server\033[0m"
+				echo -e "\033[1;32m[INFO]\033[0m \033[1;36m本地主机\033[0m：\033[1;31m$ip\033[0m"
+				echo -e "\033[1;32m[INFO]\033[0m \033[1;36m学校名字\033[0m：\033[1;31m$name\033[0m"
+				echo -e "\033[1;32m[INFO]\033[0m \033[1;36m用户名\033[0m：\033[1;31m$user\033[0m"
+				echo -e "\033[1;32m[INFO]\033[0m \033[1;36m密码\033[0m：\033[1;31m$passwd\033[0m"
+				echo -e "\033[1;32m[INFO]\033[0m \033[1;36mPlease edit the file\033[0m: \033[1;31m$File\033[0m"
 				exit 0
 		fi
 	fi
@@ -225,21 +225,21 @@ getconf(){
 
 # 登录
 login(){
-	echo -e "\033[1;32m[IFO]\033[0m \033[1;36m正在登陆...\033[0m"
+	echo -e "\033[1;32m[INFO]\033[0m \033[1;36m正在登陆...\033[0m"
 	curl -s "http://$server/quickauth.do?wlanacname=$name&wlanuserip=$ip&userid=$user&passwd=$passwd" > /tmp/young.tmp
 	result="$(cut -d '"' -f 8 /tmp/young.tmp 2>&1)"
 	if [ "$result" != "" ];then
-		echo $result
+		echo -e "\033[1;32m[INFO]\033[0m \033[1;31m$result\033[0m"
 	fi
 	while([ "认证成功" != "$result" ])
 	do
-		echo -e "\033[1;32m[IFO]\033[0m \033[1;31m登陆失败...\033[0m"
+		echo -e "\033[1;32m[INFO]\033[0m \033[1;31m登陆失败...\033[0m"
 		sleep 2s
-		echo -e "\033[1;32m[IFO]\033[0m \033[1;36m正在重试...\033[0m"
+		echo -e "\033[1;32m[INFO]\033[0m \033[1;36m正在重试...\033[0m"
 		curl -s "http://$server/quickauth.do?wlanacname=$name&wlanuserip=$ip&userid=$user&passwd=$passwd" > /tmp/young.tmp
 		result="$(cut -d '"' -f 8 /tmp/young.tmp 2>&1)"
 		if [ "$result" != "" ];then
-			echo $result
+			echo -e "\033[1;32m[INFO]\033[0m \033[1;31m$result\033[0m"
 		fi
 	done
 }
@@ -255,7 +255,7 @@ keeplive(){
 # 检查配置
 checkconf(){
 	if [[ $server == "未知" || $ip == "未知" || $name == "未知" || $user == "未知" || $passwd == "未知" ]]; then
-		echo -e "\033[1;32m[IFO]\033[0m \033[1;31m信息错误！！\033[0m"
+		echo -e "\033[1;32m[INFO]\033[0m \033[1;31m信息错误！！\033[0m"
 		exit 1
 	fi
 }
